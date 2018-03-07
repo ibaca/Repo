@@ -1,0 +1,4 @@
+service\ViewingServiceTest.class
+webservice\RoyaltyWebServiceTest.class
+service\PaymentServiceTest.class
+utils\UtilsJSONTest.class
