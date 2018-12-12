@@ -2,18 +2,8 @@ package service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 import com.royalty.model.Episode;
 import com.royalty.model.RoyaltyPayment;
@@ -21,13 +11,22 @@ import com.royalty.model.Studio;
 import com.royalty.repository.RoyaltyRepository;
 import com.royalty.service.PaymentService;
 import com.royalty.service.ServiceException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class PaymentServiceTest {
-	
-	@InjectMocks
-	PaymentService paymentService;	
-	
+
+    @InjectMocks
+    PaymentService paymentService;
+
     @Mock
     RoyaltyRepository royaltyRepository;
 
@@ -41,9 +40,7 @@ public class PaymentServiceTest {
         assertEquals(result.size(), 0);
     }
 
-   
-
-	@Test
+    @Test
     public void testAllPaymentsNoEpisodes() throws ServiceException {
         when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
         when(royaltyRepository.getAllEpisodes()).thenReturn(emptyListEpisode());
@@ -52,7 +49,7 @@ public class PaymentServiceTest {
 
         assertNotNull(result);
         assertEquals(result.size(), 2);
-        assertEquals(result.get(0).getViewings(), new Integer(0));
+        assertEquals(result.get(0).getViewings(), 0);
         assertEquals(result.get(0).getRoyaltiy(), "0.0 £");
     }
 
@@ -65,7 +62,7 @@ public class PaymentServiceTest {
 
         assertNotNull(result);
         assertEquals(result.size(), 2);
-        assertEquals(result.get(0).getViewings(), new Integer(1));
+        assertEquals(result.get(0).getViewings(), 1);
         assertEquals(result.get(0).getRoyaltiy(), "12.0 £");
     }
 
@@ -78,14 +75,14 @@ public class PaymentServiceTest {
 
     @Test
     public void testPaymentWhenEstudioAndEpisodio() throws ServiceException {
-    	 when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
-         when(royaltyRepository.getAllEpisodes()).thenReturn(createEpisodeList());
-         
-         RoyaltyPayment royaltyAfter = paymentService.getPaymentById("studio1");
-         assertEquals(royaltyAfter.getRightsownerId(), "studio1");
-         assertEquals(royaltyAfter.getRightsowner(), "HBO");
-         assertEquals(royaltyAfter.getRoyaltiy(), "12.0 £");
-         assertEquals(royaltyAfter.getViewings(), new Integer(1));
+        when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
+        when(royaltyRepository.getAllEpisodes()).thenReturn(createEpisodeList());
+
+        RoyaltyPayment royaltyAfter = paymentService.getPaymentById("studio1");
+        assertEquals(royaltyAfter.getRightsownerId(), "studio1");
+        assertEquals(royaltyAfter.getRightsowner(), "HBO");
+        assertEquals(royaltyAfter.getRoyaltiy(), "12.0 £");
+        assertEquals(royaltyAfter.getViewings(), 1);
     }
 
     private List<Studio> createStudioList() {
@@ -117,16 +114,12 @@ public class PaymentServiceTest {
         episode.setRightsowner(rightsowner);
         return episode;
     }
-	
-    private List<Studio> emptyListStudio() {
-		
-		return new ArrayList<Studio>();
-	}
-    
-    private List<Episode> emptyListEpisode() {
-		
-		return new ArrayList<Episode>();
-	}
-    
 
+    private List<Studio> emptyListStudio() {
+        return new ArrayList<>();
+    }
+
+    private List<Episode> emptyListEpisode() {
+        return new ArrayList<>();
+    }
 }
