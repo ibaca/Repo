@@ -1,7 +1,8 @@
 package com.royalty.utils;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,9 +23,10 @@ public class UtilsJSON {
 	
 	public static List<Studio> getStudiosfromJSON() {
 		JSONArray results = new JSONArray();
-		try {			
-			
-		 JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(".\\files\\studios.json"));		 
+		try {
+
+			InputStream resource = UtilsJSON.class.getResourceAsStream("studios.json");
+			JSONObject jsonObject = (JSONObject) parser.parse(new InputStreamReader(resource));
 		 results = (JSONArray) jsonObject.get("studios");
 		 
 		} catch (ParseException | IOException e) {			
@@ -47,8 +49,9 @@ public class UtilsJSON {
 	public static List<Episode> getEpisodesfromJSON() {
 		JSONArray results = new JSONArray();
 		try {
-			
-		 JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(".\\files\\episodes.json"));		 
+
+			InputStream resource = UtilsJSON.class.getResourceAsStream("episodes.json");
+			JSONObject jsonObject = (JSONObject) parser.parse(new InputStreamReader(resource));
 		 results = (JSONArray) jsonObject.get("episodes");
 		 
 		} catch (ParseException | IOException e) {			
