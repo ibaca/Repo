@@ -1,4 +1,4 @@
-package com.royalty.model;
+package com.royalty.server.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

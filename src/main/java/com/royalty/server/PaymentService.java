@@ -1,20 +1,17 @@
-package com.royalty.service;
+package com.royalty.server;
 
-import com.royalty.model.Episode;
-import com.royalty.model.RoyaltyPayment;
-import com.royalty.model.Studio;
-import com.royalty.repository.RoyaltyRepository;
-import com.royalty.service.interfaces.PaymentInterface;
+import com.royalty.server.model.Episode;
+import com.royalty.api.RoyaltyPayment;
+import com.royalty.server.model.Studio;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PaymentService implements PaymentInterface {
+public class PaymentService {
 
-    @Autowired
-    RoyaltyRepository royaltyRepository;
+    @Autowired RoyaltyRepository royaltyRepository;
 
     public List<RoyaltyPayment> getAllPayments() throws ServiceException {
         try {

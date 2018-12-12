@@ -1,10 +1,10 @@
-package utils;
+package com.royalty.server;
 
 import static org.junit.Assert.assertNotNull;
 
-import com.royalty.model.Episode;
-import com.royalty.model.Studio;
-import com.royalty.utils.UtilsJSON;
+import com.royalty.server.model.Episode;
+import com.royalty.server.model.Studio;
+import com.royalty.server.UtilsJSON;
 import java.util.List;
 import org.junit.Test;
 

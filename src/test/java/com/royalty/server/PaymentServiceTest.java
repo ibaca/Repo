@@ -1,16 +1,16 @@
-package service;
+package com.royalty.server;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
-import com.royalty.model.Episode;
-import com.royalty.model.RoyaltyPayment;
-import com.royalty.model.Studio;
-import com.royalty.repository.RoyaltyRepository;
-import com.royalty.service.PaymentService;
-import com.royalty.service.ServiceException;
+import com.royalty.server.model.Episode;
+import com.royalty.api.RoyaltyPayment;
+import com.royalty.server.model.Studio;
+import com.royalty.server.RoyaltyRepository;
+import com.royalty.server.PaymentService;
+import com.royalty.server.ServiceException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;

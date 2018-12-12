@@ -1,6 +1,5 @@
-package com.royalty.webservice.interfaces;
+package com.royalty.api;
 
-import com.royalty.model.RoyaltyPayment;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +16,14 @@ public interface RoyaltyWebService {
 
     /** Returns the royalties owed to a specific Rights Owner */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", path = "/payments/{rightsOwnerId}")
-    ResponseEntity<RoyaltyPayment> readPayment(@PathVariable("rightsOwnerId") String rightsOwnerId);
+    ResponseEntity<RoyaltyPayment> readPayment(
+            @PathVariable("rightsOwnerId") String rightsOwnerId);
 
     /** Add viewings for a episode */
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", path = "/viewing")
-    ResponseEntity<?> createViewing(@RequestParam(value = "episode", required = true) String episode,
-            @RequestParam(value = "customer", required = true) String customer);
+    ResponseEntity<?> createViewing(
+            @RequestParam(value = "episode") String episode,
+            @RequestParam(value = "customer") String customer);
 
     /** Reset all viewings for all episodes */
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", path = "/reset")

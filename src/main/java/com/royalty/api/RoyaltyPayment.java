@@ -1,5 +1,6 @@
-package com.royalty.model;
+package com.royalty.api;
 
+import com.royalty.server.model.Studio;
 import java.io.Serializable;
 
 public class RoyaltyPayment implements Serializable {
@@ -50,6 +51,5 @@ public class RoyaltyPayment implements Serializable {
 
     public void incrementRoyalty() {
         this.royaltiy = Double.toString(Double.parseDouble(this.royaltiy) * this.viewings);
-
     }
 }

@@ -1,11 +1,11 @@
-package webservice;
+package com.royalty.server;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import com.royalty.Application;
+import com.royalty.server.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

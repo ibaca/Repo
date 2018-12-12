@@ -1,20 +1,17 @@
-package com.royalty.repository;
+package com.royalty.server;
 
-import com.royalty.model.Episode;
-import com.royalty.model.Studio;
-import com.royalty.utils.UtilsJSON;
+import com.royalty.server.model.Episode;
+import com.royalty.server.model.Studio;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RoyaltyRepositoryImpl implements RoyaltyRepository {
+public class RoyaltyRepository {
 
-    @Override
     public List<Studio> getAllStudios() {
         return UtilsJSON.getStudiosfromJSON();
     }
 
-    @Override
     public List<Episode> getAllEpisodes() {
         return UtilsJSON.getEpisodesfromJSON();
     }

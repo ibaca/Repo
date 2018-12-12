@@ -1,4 +1,4 @@
-package com.royalty.service;
+package com.royalty.server;
 
 public class ServiceException extends Exception {
 }

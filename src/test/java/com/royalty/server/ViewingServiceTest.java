@@ -1,15 +1,15 @@
-package service;
+package com.royalty.server;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
-import com.royalty.model.Episode;
-import com.royalty.model.Viewing;
-import com.royalty.repository.RoyaltyRepository;
-import com.royalty.service.ServiceException;
-import com.royalty.service.ViewingService;
+import com.royalty.server.model.Episode;
+import com.royalty.server.model.Viewing;
+import com.royalty.server.RoyaltyRepository;
+import com.royalty.server.ServiceException;
+import com.royalty.server.ViewingService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

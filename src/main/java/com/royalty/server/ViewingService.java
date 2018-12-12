@@ -1,19 +1,16 @@
-package com.royalty.service;
+package com.royalty.server;
 
-import com.royalty.model.Episode;
-import com.royalty.model.Viewing;
-import com.royalty.repository.RoyaltyRepository;
-import com.royalty.service.interfaces.ViewingInterface;
+import com.royalty.server.model.Episode;
+import com.royalty.server.model.Viewing;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ViewingService implements ViewingInterface {
+public class ViewingService {
 
-    @Autowired
-    RoyaltyRepository royaltyRepository;
+    @Autowired RoyaltyRepository royaltyRepository;
 
     public synchronized List<Viewing> createViewing(String idEpisode, String idCustomer) throws ServiceException {
         try {

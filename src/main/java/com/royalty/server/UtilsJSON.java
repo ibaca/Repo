@@ -1,8 +1,8 @@
-package com.royalty.utils;
+package com.royalty.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.royalty.model.Episode;
-import com.royalty.model.Studio;
+import com.royalty.server.model.Episode;
+import com.royalty.server.model.Studio;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
