@@ -21,8 +21,8 @@ public class RoyaltyRepository {
     private final Map<Episode, List<Viewing>> viewings;
 
     public RoyaltyRepository() {
-        studios = UtilsJSON.getStudiosfromJSON().stream().collect(Collectors.toMap(s -> s.id, Function.identity()));
-        episodes = UtilsJSON.getEpisodesfromJSON().stream().collect(Collectors.toMap(s -> s.id, Function.identity()));
+        studios = UtilsJSON.getStudios().stream().collect(Collectors.toMap(s -> s.id, Function.identity()));
+        episodes = UtilsJSON.getEpisodes().stream().collect(Collectors.toMap(s -> s.id, Function.identity()));
         viewings = new HashMap<>();
     }
     public Collection<Studio> getStudios() { return studios.values(); }

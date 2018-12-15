@@ -4,72 +4,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.royalty.server.model.Episode;
 import com.royalty.server.model.Studio;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class UtilsJSON {
 
-    public final static ObjectMapper mapper = new ObjectMapper();
-    public final static JSONParser parser = new JSONParser();
-
-    public static List<Studio> getStudiosfromJSON() {
-        JSONArray results = new JSONArray();
+    public static List<Studio> getStudios() {
         try {
-
-            InputStream resource = UtilsJSON.class.getResourceAsStream("studios.json");
-            JSONObject jsonObject = (JSONObject) parser.parse(new InputStreamReader(resource));
-            results = (JSONArray) jsonObject.get("studios");
-
-        } catch (ParseException | IOException e) {
-            return Collections.emptyList();
-        }
-
-        return (List<Studio>) results.stream()
-                .map(elem -> createStudioFromRawJson(elem))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
-
-    private static Studio createStudioFromRawJson(Object elem) {
-        try {
-            return mapper.readValue(elem.toString(), Studio.class);
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(UtilsJSON.class.getResourceAsStream("studios.json"), Studios.class).studios;
         } catch (IOException e) {
-            return new Studio();
+            throw new RuntimeException("ups! fatal error loading studios!", e);
         }
     }
 
-    public static List<Episode> getEpisodesfromJSON() {
-        JSONArray results = new JSONArray();
+    public static List<Episode> getEpisodes() {
         try {
-
-            InputStream resource = UtilsJSON.class.getResourceAsStream("episodes.json");
-            JSONObject jsonObject = (JSONObject) parser.parse(new InputStreamReader(resource));
-            results = (JSONArray) jsonObject.get("episodes");
-
-        } catch (ParseException | IOException e) {
-            return Collections.emptyList();
-        }
-
-        return (List<Episode>) results.stream()
-                .map(elem -> createEpisodeFromRawJson(elem))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
-    }
-
-    private static Episode createEpisodeFromRawJson(Object elem) {
-        try {
-            return mapper.readValue(elem.toString(), Episode.class);
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(UtilsJSON.class.getResourceAsStream("episodes.json"), Episodes.class).episodes;
         } catch (IOException e) {
-            return new Episode();
+            throw new RuntimeException("ups! fatal error loading episodes!", e);
         }
+    }
+
+    static class Episodes {
+        public List<Episode> episodes;
+    }
+
+    static class Studios {
+        public List<Studio> studios;
     }
 }
