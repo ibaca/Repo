@@ -28,7 +28,7 @@ public class PaymentServiceTest {
 
     @Test
     public void testAllPaymentsNoStudios() {
-        when(royaltyRepository.getAllStudios()).thenReturn(emptyListStudio());
+        when(royaltyRepository.getStudios()).thenReturn(emptyListStudio());
 
         List<RoyaltyPayment> result = paymentService.getAllPayments();
 
@@ -38,8 +38,8 @@ public class PaymentServiceTest {
 
     @Test
     public void testAllPaymentsNoEpisodes() {
-        when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
-        when(royaltyRepository.getAllEpisodes()).thenReturn(emptyListEpisode());
+        when(royaltyRepository.getStudios()).thenReturn(createStudioList());
+        when(royaltyRepository.getEpisodes()).thenReturn(emptyListEpisode());
 
         List<RoyaltyPayment> result = paymentService.getAllPayments();
 
@@ -51,8 +51,8 @@ public class PaymentServiceTest {
 
     @Test
     public void testAllPaymentsWithStudiosAndEpisodes() {
-        when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
-        when(royaltyRepository.getAllEpisodes()).thenReturn(createEpisodeList());
+        when(royaltyRepository.getStudios()).thenReturn(createStudioList());
+        when(royaltyRepository.getEpisodes()).thenReturn(createEpisodeList());
 
         List<RoyaltyPayment> result = paymentService.getAllPayments();
 
@@ -64,15 +64,15 @@ public class PaymentServiceTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testAllPaymentsWhenException() {
-        doThrow(new ArrayIndexOutOfBoundsException()).when(royaltyRepository).getAllStudios();
+        doThrow(new ArrayIndexOutOfBoundsException()).when(royaltyRepository).getStudios();
 
         paymentService.getAllPayments();
     }
 
     @Test
     public void testPaymentWhenEstudioAndEpisodio() {
-        when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
-        when(royaltyRepository.getAllEpisodes()).thenReturn(createEpisodeList());
+        when(royaltyRepository.getStudios()).thenReturn(createStudioList());
+        when(royaltyRepository.getEpisodes()).thenReturn(createEpisodeList());
 
         RoyaltyPayment royaltyAfter = paymentService.getPaymentById("studio1");
         assertEquals(royaltyAfter.rightsOwnerId, "studio1");
@@ -107,7 +107,7 @@ public class PaymentServiceTest {
         Episode episode = new Episode();
         episode.id = id;
         episode.name = name;
-        episode.rightsOwnerId = rightsowner;
+        episode.rightsowner = rightsowner;
         return episode;
     }
 

@@ -1,17 +1,10 @@
 package com.royalty.server.model;
 
-import java.io.Serializable;
-
-public class Viewing implements Serializable {
-    public Episode episode;
-    public int viewings;
-
-    public Viewing(Episode episode) {
+public class Viewing {
+    public final Episode episode;
+    public final String customer;
+    public Viewing(Episode episode, String customer) {
         this.episode = episode;
-        this.viewings = viewings + 1;
-    }
-
-    public boolean hasEpisodeAndId() {
-        return (this.episode != null && this.episode.id != null);
+        this.customer = customer;
     }
 }

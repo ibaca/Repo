@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -33,6 +34,7 @@ public class UtilsJSON {
 
         return (List<Studio>) results.stream()
                 .map(elem -> createStudioFromRawJson(elem))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -58,6 +60,7 @@ public class UtilsJSON {
 
         return (List<Episode>) results.stream()
                 .map(elem -> createEpisodeFromRawJson(elem))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
     }

@@ -32,20 +32,12 @@ public class RoyaltyWebServiceImpl implements RoyaltyWebService {
     public ResponseEntity<?> createViewing(
             @RequestParam(value = "episode") String episode,
             @RequestParam(value = "customer") String customer) {
-        try {
-            viewingService.createViewing(episode, customer);
-        } catch (ServiceException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        viewingService.createViewing(episode, customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ResponseEntity<?> resetViewing() {
-        try {
-            viewingService.resetViewing();
-        } catch (ServiceException e) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        }
+        viewingService.resetViewing();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
