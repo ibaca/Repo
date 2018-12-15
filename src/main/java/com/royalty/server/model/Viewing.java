@@ -3,31 +3,15 @@ package com.royalty.server.model;
 import java.io.Serializable;
 
 public class Viewing implements Serializable {
-    private Episode episode;
-    private int viewings;
+    public Episode episode;
+    public int viewings;
 
     public Viewing(Episode episode) {
-        this.setEpisode(episode);
-        this.setViewings(this.getViewings() + 1);
-    }
-
-    public Episode getEpisode() {
-        return episode;
-    }
-
-    public void setEpisode(Episode episode) {
         this.episode = episode;
-    }
-
-    public int getViewings() {
-        return viewings;
-    }
-
-    public void setViewings(int viewings) {
-        this.viewings = viewings;
+        this.viewings = viewings + 1;
     }
 
     public boolean hasEpisodeAndId() {
-        return (this.episode != null && this.episode.getId() != null);
+        return (this.episode != null && this.episode.id != null);
     }
 }

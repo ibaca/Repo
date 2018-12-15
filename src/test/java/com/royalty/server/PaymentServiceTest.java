@@ -5,13 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
-import com.royalty.server.model.Episode;
 import com.royalty.api.RoyaltyPayment;
+import com.royalty.server.model.Episode;
 import com.royalty.server.model.Studio;
-import com.royalty.server.RoyaltyRepository;
-import com.royalty.server.PaymentService;
-import com.royalty.server.ServiceException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +27,7 @@ public class PaymentServiceTest {
     RoyaltyRepository royaltyRepository;
 
     @Test
-    public void testAllPaymentsNoStudios() throws ServiceException {
+    public void testAllPaymentsNoStudios() {
         when(royaltyRepository.getAllStudios()).thenReturn(emptyListStudio());
 
         List<RoyaltyPayment> result = paymentService.getAllPayments();
@@ -41,7 +37,7 @@ public class PaymentServiceTest {
     }
 
     @Test
-    public void testAllPaymentsNoEpisodes() throws ServiceException {
+    public void testAllPaymentsNoEpisodes() {
         when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
         when(royaltyRepository.getAllEpisodes()).thenReturn(emptyListEpisode());
 
@@ -49,12 +45,12 @@ public class PaymentServiceTest {
 
         assertNotNull(result);
         assertEquals(result.size(), 2);
-        assertEquals(result.get(0).getViewings(), 0);
-        assertEquals(result.get(0).getRoyaltiy(), "0.0 £");
+        assertEquals(result.get(0).viewings, 0);
+        assertEquals(result.get(0).royalty, 0.0, .1);
     }
 
     @Test
-    public void testAllPaymentsWithStudiosAndEpisodes() throws ServiceException {
+    public void testAllPaymentsWithStudiosAndEpisodes() {
         when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
         when(royaltyRepository.getAllEpisodes()).thenReturn(createEpisodeList());
 
@@ -62,41 +58,41 @@ public class PaymentServiceTest {
 
         assertNotNull(result);
         assertEquals(result.size(), 2);
-        assertEquals(result.get(0).getViewings(), 1);
-        assertEquals(result.get(0).getRoyaltiy(), "12.0 £");
+        assertEquals(result.get(0).viewings, 1);
+        assertEquals(result.get(0).royalty, 12.0, .1);
     }
 
-    @Test(expected = ServiceException.class)
-    public void testAllPaymentsWhenException() throws ServiceException {
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testAllPaymentsWhenException() {
         doThrow(new ArrayIndexOutOfBoundsException()).when(royaltyRepository).getAllStudios();
 
         paymentService.getAllPayments();
     }
 
     @Test
-    public void testPaymentWhenEstudioAndEpisodio() throws ServiceException {
+    public void testPaymentWhenEstudioAndEpisodio() {
         when(royaltyRepository.getAllStudios()).thenReturn(createStudioList());
         when(royaltyRepository.getAllEpisodes()).thenReturn(createEpisodeList());
 
         RoyaltyPayment royaltyAfter = paymentService.getPaymentById("studio1");
-        assertEquals(royaltyAfter.getRightsownerId(), "studio1");
-        assertEquals(royaltyAfter.getRightsowner(), "HBO");
-        assertEquals(royaltyAfter.getRoyaltiy(), "12.0 £");
-        assertEquals(royaltyAfter.getViewings(), 1);
+        assertEquals(royaltyAfter.rightsOwnerId, "studio1");
+        assertEquals(royaltyAfter.rightsOwnerName, "HBO");
+        assertEquals(royaltyAfter.royalty, 12.0, .1);
+        assertEquals(royaltyAfter.viewings, 1, .1);
     }
 
     private List<Studio> createStudioList() {
-        Studio studio1 = createStudio("studio1", "HBO", new BigDecimal(12));
-        Studio studio2 = createStudio("studio2", "Sky UK", new BigDecimal(14.67));
+        Studio studio1 = createStudio("studio1", "HBO", 12);
+        Studio studio2 = createStudio("studio2", "Sky UK", 14.67);
 
         return Arrays.asList(studio1, studio2);
     }
 
-    private Studio createStudio(String id, String name, BigDecimal payment) {
+    private Studio createStudio(String id, String name, double payment) {
         Studio studio = new Studio();
-        studio.setId(id);
-        studio.setName(name);
-        studio.setPayment(payment);
+        studio.id = id;
+        studio.name = name;
+        studio.payment = payment;
         return studio;
     }
 
@@ -109,9 +105,9 @@ public class PaymentServiceTest {
 
     private Episode createEpisode(String id, String name, String rightsowner) {
         Episode episode = new Episode();
-        episode.setId(id);
-        episode.setName(name);
-        episode.setRightsowner(rightsowner);
+        episode.id = id;
+        episode.name = name;
+        episode.rightsOwnerId = rightsowner;
         return episode;
     }
 

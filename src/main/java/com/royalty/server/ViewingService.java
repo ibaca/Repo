@@ -16,7 +16,7 @@ public class ViewingService {
         try {
             return getAllViewing().stream()
                     .filter(elem -> elem.hasEpisodeAndId())
-                    .filter(elem -> elem.getEpisode().getId().equals(idEpisode)).map(elem -> incrementViewings(elem))
+                    .filter(elem -> elem.episode.id.equals(idEpisode)).map(elem -> incrementViewings(elem))
                     .collect(Collectors.toList());
         } catch (Exception ex) {
             throw new ServiceException();
@@ -24,7 +24,7 @@ public class ViewingService {
     }
 
     private Viewing incrementViewings(Viewing viewing) {
-        viewing.setViewings(viewing.getViewings() + 1);
+        viewing.viewings = viewing.viewings + 1;
         return viewing;
     }
 
@@ -38,7 +38,7 @@ public class ViewingService {
     }
 
     private Viewing resetViewings(Viewing viewing) {
-        viewing.setViewings(0);
+        viewing.viewings = 0;
         return viewing;
     }
 

@@ -7,9 +7,6 @@ import static org.mockito.Mockito.when;
 
 import com.royalty.server.model.Episode;
 import com.royalty.server.model.Viewing;
-import com.royalty.server.RoyaltyRepository;
-import com.royalty.server.ServiceException;
-import com.royalty.server.ViewingService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +41,7 @@ public class ViewingServiceTest {
 
         assertNotNull(result);
         assertEquals(result.size(), 2);
-        assertEquals(result.get(0).getViewings(), 1);
+        assertEquals(result.get(0).viewings, 1);
     }
 
     @Test
@@ -54,7 +51,7 @@ public class ViewingServiceTest {
 
         assertNotNull(result);
         assertEquals(result.size(), 1);
-        assertEquals(result.get(0).getViewings(), 2);
+        assertEquals(result.get(0).viewings, 2);
     }
 
     @Test
@@ -64,7 +61,7 @@ public class ViewingServiceTest {
 
         assertNotNull(result);
         assertEquals(result.size(), 2);
-        assertEquals(result.get(0).getViewings(), 0);
+        assertEquals(result.get(0).viewings, 0);
     }
 
     @Test(expected = ServiceException.class)
@@ -82,9 +79,9 @@ public class ViewingServiceTest {
 
     private Episode createEpisode(String id, String name, String rightsowner) {
         Episode episode = new Episode();
-        episode.setId(id);
-        episode.setName(name);
-        episode.setRightsowner(rightsowner);
+        episode.id = id;
+        episode.name = name;
+        episode.rightsOwnerId = rightsowner;
         return episode;
     }
 

@@ -1,48 +1,27 @@
 package com.royalty.server;
 
-import com.royalty.server.model.Episode;
+import static java.util.stream.Collectors.toList;
+
 import com.royalty.api.RoyaltyPayment;
 import com.royalty.server.model.Studio;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PaymentService {
+    @Autowired RoyaltyRepository repository;
 
-    @Autowired RoyaltyRepository royaltyRepository;
-
-    public List<RoyaltyPayment> getAllPayments() throws ServiceException {
-        try {
-            List<Studio> studios = royaltyRepository.getAllStudios();
-            return studios.stream().map(studio -> new RoyaltyPayment(studio))
-                    .map(royaltyPayment -> incrementRoyaltyAndViewingsIfExistsEpisode(royaltyPayment))
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            throw new ServiceException();
-        }
+    public List<RoyaltyPayment> getAllPayments() {
+        return repository.getAllStudios().stream().map(this::getStudioPayment).collect(toList());
     }
 
-    private RoyaltyPayment incrementRoyaltyAndViewingsIfExistsEpisode(RoyaltyPayment royaltyPayment) {
-        List<Episode> episodes = royaltyRepository.getAllEpisodes();
-        episodes.stream().filter(episode -> episode.getRightsowner().equals(royaltyPayment.getRightsownerId()))
-                .map(episode -> incrementViewings(royaltyPayment)).collect(Collectors.toList());
-
-        royaltyPayment.incrementRoyalty();
-        return royaltyPayment;
+    public RoyaltyPayment getPaymentById(String id) {
+        return getStudioPayment(repository.getAllStudios().stream().filter(p -> id.equals(p.id)).findFirst().get());
     }
 
-    private RoyaltyPayment incrementViewings(RoyaltyPayment payment) {
-        payment.setViewings(payment.getViewings() + 1);
-        return payment;
-    }
-
-    public RoyaltyPayment getPaymentById(String id) throws ServiceException {
-        try {
-            return getAllPayments().stream().filter(p -> p.getRightsownerId().equals(id)).findAny().get();
-        } catch (Exception e) {
-            throw new ServiceException();
-        }
+    private RoyaltyPayment getStudioPayment(Studio studio) {
+        long viewings = repository.getAllEpisodes().stream().filter(e -> studio.id.equals(e.rightsOwnerId)).count();
+        return new RoyaltyPayment(studio.id, studio.name, studio.payment * viewings, (int) viewings);
     }
 }
