@@ -56,7 +56,7 @@ public class ViewingServiceTest {
 //        assertEquals(result.get(0).viewings, 0);
     }
 
-    @Test(expected = ServiceException.class) public void testAllViewingsWithException() {
+    @Test(expected = RuntimeException.class) public void testAllViewingsWithException() {
         doThrow(new ArrayIndexOutOfBoundsException()).when(royaltyRepository).getEpisodes();
         viewingService.getAllViewing();
     }
